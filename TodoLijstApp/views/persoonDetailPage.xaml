@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TodoLijstApp.views.persoonDetailPage"
+             Title="Persoon details">
+
+    <ScrollView>
+
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label
+                Text="Persoon details"
+                FontSize="30"
+                FontAttributes="Bold" />
+
+            <Entry
+                x:Name="FirstNameEntry"
+                Placeholder="Voornaam" />
+
+            <Entry
+                x:Name="LastNameEntry"
+                Placeholder="Achternaam" />
+
+            <Label
+                Text="Geboortedatum" />
+
+            <DatePicker
+                x:Name="BirthDatePicker" />
+
+            <Entry
+                x:Name="ImageUrlEntry"
+                Placeholder="Foto URL" />
+
+            <Image
+                x:Name="PersonImage"
+                HeightRequest="200"
+                Aspect="AspectFill" />
+
+            <Button
+                Text="Opslaan"
+                Clicked="OnSaveClicked" />
+
+            <Button
+                Text="Verwijderen"
+                BackgroundColor="Red"
+                TextColor="White"
+                Clicked="OnDeleteClicked" />
+
+            <Button
+                Text="Annuleren"
+                Clicked="OnCancelClicked" />
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

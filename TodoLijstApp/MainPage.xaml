@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TodoLijstApp.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label
+                Text="TodoLijst"
+                FontSize="32"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
+
+            <Entry
+                x:Name="TaskEntry"
+                Placeholder="Nieuwe taak toevoegen..." />
+
+            <Picker
+                x:Name="PersonsPicker"
+                Title="Selecteer persoon"
+                ItemDisplayBinding="{Binding FullName}" />
+
+            <Button
+                Text="Taak toevoegen"
+                Clicked="OnAddTaskClicked" />
+
+            <Button
+                Text="Personen"
+                Clicked="OnPersonsClicked" />
+
+            <HorizontalStackLayout Spacing="10">
+
+                <Button
+                    Text="Toon alles"
+                    Clicked="OnShowAllClicked" />
+
+                <Button
+                    Text="Niet afgewerkt"
+                    Clicked="OnShowNotCompletedClicked" />
+
+                <Button
+                    Text="Recent eerst"
+                    Clicked="OnShowRecentClicked" />
+
+                <SearchBar
+                   x:Name="TaskSearchBar"
+                   Placeholder="Zoek taak..."
+                   TextChanged="OnSearchTextChanged" />
+
+            </HorizontalStackLayout>
+
+            <CollectionView x:Name="TasksList">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Frame Padding="15"
+                               Margin="0,5"
+                               BorderColor="Gray">
+
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnTaskTapped" />
+                            </Frame.GestureRecognizers>
+
+                            <VerticalStackLayout>
+
+                                <Label
+                                    Text="{Binding Title}"
+                                    FontSize="20"
+                                    FontAttributes="Bold" />
+
+                                <Label
+                                    Text="{Binding AssignedPersonName}"
+                                    FontSize="14" />
+
+                                <Label
+                                    Text="{Binding Description}"
+                                    FontSize="14"
+                                    MaxLines="2" />
+
+                                <HorizontalStackLayout>
+
+                                    <Label
+                                        Text="Voltooid:"
+                                        VerticalOptions="Center" />
+
+                                    <CheckBox
+                                        IsChecked="{Binding IsCompleted}"
+                                        CheckedChanged="OnTaskCheckedChanged" />
+
+                                </HorizontalStackLayout>
+
+                                <Button
+                                    Text="Verwijder taak"
+                                    BackgroundColor="Red"
+                                    TextColor="White"
+                                    Clicked="OnDeleteTaskClicked" />
+
+                            </VerticalStackLayout>
+
+                        </Frame>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

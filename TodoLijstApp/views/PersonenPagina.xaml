@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TodoLijstApp.views.PersonenPagina"
+             Title="PersonenPagina">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Entry
+                x:Name="FirstNameEntry"
+                Placeholder="Voornaam" />
+
+            <Entry
+                x:Name="LastNameEntry"
+                Placeholder="Achternaam" />
+
+            <Label
+                Text="Geboortedatum"
+                FontSize="14" />
+
+            <DatePicker
+                x:Name="BirthDatePicker" />
+
+            <Button
+                Text="Persoon toevoegen"
+                Clicked="OnAddPersonClicked" />
+
+            <CollectionView x:Name="PersonsList">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Frame Padding="10" Margin="0,5">
+
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnPersonTapped" />
+                            </Frame.GestureRecognizers>
+
+                            <VerticalStackLayout>
+
+                                <Label
+                                    Text="{Binding FirstName}"
+                                    FontAttributes="Bold"
+                                    FontSize="18" />
+
+                                <Label
+                                    Text="{Binding LastName}" />
+
+                                <Label
+                                    Text="{Binding AgeText}"
+                                    FontSize="14" />
+
+                                <Button
+                                    Text="Verwijder persoon"
+                                    BackgroundColor="Red"
+                                    TextColor="White"
+                                    Clicked="OnDeletePersonClicked" />
+
+                            </VerticalStackLayout>
+
+                        </Frame>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TodoLijstApp.views.TaskDetailPage">
+
+    <ScrollView>
+
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label
+                Text="Taak Details"
+                FontSize="30"
+                FontAttributes="Bold" />
+
+            <Entry
+                x:Name="TitleEntry"
+                Placeholder="Titel van taak" />
+
+            <Editor
+                x:Name="DescriptionEditor"
+                Placeholder="Beschrijving"
+                HeightRequest="120" />
+
+            <Picker
+                x:Name="PersonsPicker"
+                Title="Selecteer persoon"
+                ItemDisplayBinding="{Binding FirstName}" />
+
+            <HorizontalStackLayout>
+
+                <Label
+                    Text="Voltooid"
+                    VerticalOptions="Center" />
+
+                <CheckBox
+                    x:Name="CompletedCheckBox" />
+
+            </HorizontalStackLayout>
+
+            <Button
+                Text="Opslaan"
+                Clicked="OnSaveClicked" />
+
+            <Button
+                Text="Annuleren"
+                Clicked="OnCancelClicked" />
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>
