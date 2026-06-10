@@ -5,13 +5,13 @@ namespace TodoLijstApp.views;
 
 public partial class PersonenPagina : ContentPage
 {
-    private readonly PersonRepository _personRepository;
+    private readonly IPersonRepository _personRepository;
 
-    public PersonenPagina()
+    public PersonenPagina(IPersonRepository personRepository)
     {
         InitializeComponent();
 
-        _personRepository = new PersonRepository();
+        _personRepository = personRepository;
 
         LoadPersons();
     }
@@ -51,7 +51,7 @@ public partial class PersonenPagina : ContentPage
     {
         if (sender is Frame frame && frame.BindingContext is Person person)
         {
-            await Navigation.PushAsync(new persoonDetailPage(person));
+            await Navigation.PushAsync(new persoonDetailPage(person, _personRepository));
         }
     }
 

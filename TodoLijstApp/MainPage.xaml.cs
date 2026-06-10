@@ -1,20 +1,22 @@
 ﻿using TodoLijstApp.Models;
 using TodoLijstApp.Repositories;
+using TodoLijstApp.services;
 using TodoLijstApp.Strategies;
+using TodoLijstApp.views;
 
 namespace TodoLijstApp
 {
     public partial class MainPage : ContentPage
     {
-        private readonly TaskRepository _taskRepository;
-        private readonly PersonRepository _personRepository;
+        private readonly TaskService _taskService;
+        private readonly IPersonRepository _personRepository;
 
-        public MainPage()
+        public MainPage(TaskService taskService, IPersonRepository personRepository)
         {
             InitializeComponent();
 
-            _taskRepository = new TaskRepository();
-            _personRepository = new PersonRepository();
+            _taskService = taskService;
+            _personRepository = personRepository;
 
             LoadPersons();
             LoadTasks();
@@ -49,7 +51,7 @@ namespace TodoLijstApp
                   : "Geen persoon"
             };
 
-            _taskRepository.Add(task);
+            _taskService.Add(task);
 
             TaskEntry.Text = "";
 
@@ -58,7 +60,7 @@ namespace TodoLijstApp
 
         private void ApplyFilter(ITaskFilterStrategy strategy)
         {
-            var tasks = _taskRepository.GetAll();
+            var tasks = _taskService.GetAll();
 
             TasksList.ItemsSource = strategy.Filter(tasks);
         }
@@ -70,7 +72,7 @@ namespace TodoLijstApp
                 task.IsCompleted = e.Value;
                 task.UpdatedAt = DateTime.Now;
 
-                _taskRepository.Update(task);
+                _taskService.Update(task);
             }
         }
 
@@ -86,7 +88,7 @@ namespace TodoLijstApp
 
                 if (confirm)
                 {
-                    _taskRepository.Delete(task.Id);
+                    _taskService.Delete(task.Id);
                     LoadTasks();
                 }
             }
@@ -96,14 +98,16 @@ namespace TodoLijstApp
         {
             if (sender is Frame frame && frame.BindingContext is TaskItem task)
             {
-                await Navigation.PushAsync(new TodoLijstApp.views.TaskDetailPage(task));
+                await Navigation.PushAsync(
+                   new TaskDetailPage(task, _taskService, _personRepository)
+                  );
             }
         }
         private async void OnPersonsClicked(object sender, EventArgs e)
         {
             try
             {
-                await Navigation.PushAsync(new TodoLijstApp.views.PersonenPagina());
+                await Navigation.PushAsync(new TodoLijstApp.views.PersonenPagina(_personRepository));
             }
             catch (Exception ex)
             {
@@ -120,7 +124,7 @@ namespace TodoLijstApp
         private void LoadTasks()
         {
             TasksList.ItemsSource = null;
-            TasksList.ItemsSource = _taskRepository.GetAll();
+            TasksList.ItemsSource = _taskService.GetAll();
         }
 
         private void OnShowAllClicked(object sender, EventArgs e)
@@ -144,7 +148,7 @@ namespace TodoLijstApp
         {
             var searchText = e.NewTextValue?.ToLower() ?? "";
 
-            var tasks = _taskRepository.GetAll();
+            var tasks = _taskService.GetAll();
 
             var filteredTasks = tasks
                 .Where(t => t.Title.ToLower().Contains(searchText))

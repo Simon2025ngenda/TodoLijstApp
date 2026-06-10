@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using TodoLijstApp.Repositories;
+using TodoLijstApp.views;
+using TodoLijstApp.services;
 
 namespace TodoLijstApp
 {
@@ -7,17 +9,19 @@ namespace TodoLijstApp
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
-            builder
-                .UseMauiApp<App>()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
 
-#if DEBUG
-    		builder.Logging.AddDebug();
-#endif
+            builder
+                .UseMauiApp<App>();
+
+            builder.Services.AddSingleton<ITaskRepository, TaskRepository>();
+            builder.Services.AddSingleton<IPersonRepository, PersonRepository>();
+
+            builder.Services.AddTransient<TaskService>();
+            builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<PersonenPagina>();
+            builder.Services.AddTransient<TaskDetailPage>();
+            builder.Services.AddTransient<persoonDetailPage>();
+            
 
             return builder.Build();
         }

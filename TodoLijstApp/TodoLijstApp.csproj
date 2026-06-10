@@ -73,7 +73,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Messages\" />
-	  <Folder Include="services\" />
 	  <Folder Include="ViewModels\" />
 	</ItemGroup>
 

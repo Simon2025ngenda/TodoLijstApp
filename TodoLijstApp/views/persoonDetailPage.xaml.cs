@@ -5,15 +5,15 @@ namespace TodoLijstApp.views;
 
 public partial class persoonDetailPage : ContentPage
 {
-    private readonly PersonRepository _personRepository;
+    private readonly IPersonRepository _personRepository;
 
     private Person _person;
 
-    public persoonDetailPage(Person person)
+    public persoonDetailPage(Person person, IPersonRepository personRepository)
     {
         InitializeComponent();
 
-        _personRepository = new PersonRepository();
+        _personRepository = personRepository;
 
         _person = person;
 

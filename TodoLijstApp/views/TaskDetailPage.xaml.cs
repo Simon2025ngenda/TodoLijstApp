@@ -1,21 +1,22 @@
 using TodoLijstApp.Models;
 using TodoLijstApp.Repositories;
+using TodoLijstApp.services;
 
 namespace TodoLijstApp.views;
 
 public partial class TaskDetailPage : ContentPage
 {
-    private readonly TaskRepository _taskRepository;
-    private readonly PersonRepository _personRepository;
+    private readonly TaskService _taskService;
+    private readonly IPersonRepository _personRepository;
 
     private TaskItem _task;
 
-    public TaskDetailPage(TaskItem task)
+    public TaskDetailPage(TaskItem task, TaskService taskService, IPersonRepository personRepository)
     {
         InitializeComponent();
 
-        _taskRepository = new TaskRepository();
-        _personRepository = new PersonRepository();
+        _taskService = taskService;
+        _personRepository = personRepository;
 
         _task = task;
 
@@ -62,7 +63,7 @@ public partial class TaskDetailPage : ContentPage
             _task.AssignedPersonName = $"{selectedPerson.FirstName} {selectedPerson.LastName}";
         }
 
-        _taskRepository.Update(_task);
+        _taskService.Update(_task);
 
         await Navigation.PopAsync();
     }

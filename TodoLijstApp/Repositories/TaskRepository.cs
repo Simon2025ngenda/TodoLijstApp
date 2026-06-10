@@ -4,7 +4,7 @@ using TodoLijstApp.Models;
 
 namespace TodoLijstApp.Repositories;
 
-public class TaskRepository
+public class TaskRepository : ITaskRepository
 {
     private readonly ILiteCollection<TaskItem> _tasks;
 

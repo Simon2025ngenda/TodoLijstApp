@@ -12,7 +12,11 @@ namespace TodoLijstApp
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-           return new Window(new NavigationPage(new MainPage()));
+            var mainPage = IPlatformApplication.Current!
+                .Services
+                .GetService<MainPage>();
+
+            return new Window(new NavigationPage(mainPage));
         }
     }
 }

@@ -4,7 +4,7 @@ using TodoLijstApp.Models;
 
 namespace TodoLijstApp.Repositories;
 
-public class PersonRepository
+public class PersonRepository : IPersonRepository
 {
     private readonly ILiteCollection<Person> _persons;
 
